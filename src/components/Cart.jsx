@@ -1,8 +1,11 @@
 import React, { useEffect } from "react";
 import Card from "./Card";
+import { useNavigate } from "react-router-dom";
 
 const Cart = ({ setCart }) => {
   const [data, setData] = React.useState([]);
+
+  const navigate = useNavigate();
 
   useEffect(() => {
     const cart = JSON.parse(localStorage.getItem("cart")) || [];
@@ -27,6 +30,7 @@ const Cart = ({ setCart }) => {
             setData([]);
             setCart([]);
             localStorage.removeItem("cart");
+            navigate("/products");
           }}
         >
           Clear all

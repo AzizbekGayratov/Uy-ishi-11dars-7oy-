@@ -54,9 +54,9 @@ const SingleProduct = ({ cart, setCart }) => {
                 }).then((result) => {
                   if (result.isConfirmed) {
                     setCart([...cart, product]);
-                    const data = JSON.parse(localStorage.getItem("cart")) || [];
+                    const data = localStorage.getItem("cart") || [];
                     if (data) {
-                      const cart = data;
+                      const cart = JSON.parse(data);
                       cart.push(product);
                       localStorage.setItem("cart", JSON.stringify(cart));
                     }
