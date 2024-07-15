@@ -37,7 +37,7 @@ const Products = ({ cart, setCart }) => {
     const getProductsCount = async () => {
       const response = await fetch(`${baseUrl}/products`);
       const data = await response.json();
-      const count = Math.ceil(data.length / 8);
+      const count = Math.ceil(data.length / 10);
       const pages = new Array(count).fill().map((_, i) => i + 1);
       setTotalPages(pages);
     };
