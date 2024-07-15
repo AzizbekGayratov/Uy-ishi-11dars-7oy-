@@ -1,11 +1,14 @@
 import React, { useEffect } from "react";
-import { useParams } from "react-router-dom";
+import toast from "react-hot-toast";
+import { useNavigate, useParams } from "react-router-dom";
+import Swal from "sweetalert2";
 
 const baseUrl = import.meta.env.VITE_API_URL;
 
 const SingleProduct = ({ cart, setCart }) => {
   const { id } = useParams();
-  console.log(id);
+  const navigate = useNavigate();
+
   const [product, setProduct] = React.useState([]);
   const [loading, setLoading] = React.useState(true);
 
@@ -41,14 +44,29 @@ const SingleProduct = ({ cart, setCart }) => {
             <button
               className="bg-black text-white px-4 py-2 rounded mt-[20px]"
               onClick={() => {
-                setCart([...cart, product]);
-                localStorage.setItem(
-                  "cart",
-                  JSON.stringify([...cart, product])
-                );
+                Swal.fire({
+                  icon: "question",
+                  text: "Do you want to add this product to your cart?",
+                  showCancelButton: true,
+                  confirmButtonText: "Yes, add it!",
+                  confirmButtonColor: "#3085d6",
+                  cancelButtonColor: "#d33",
+                }).then((result) => {
+                  if (result.isConfirmed) {
+                    setCart([...cart, product]);
+                    localStorage.setItem(
+                      "cart",
+                      JSON.stringify([...cart, product])
+                    );
+                    toast.success("Product added to cart");
+                  }
+                });
               }}
             >
               Add to cart
+            </button>
+            <button className="btn ml-3" onClick={() => navigate(-1)}>
+              Cancel
             </button>
           </div>
         </>

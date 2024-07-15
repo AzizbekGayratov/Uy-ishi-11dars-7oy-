@@ -13,6 +13,7 @@ import Products from "./components/Products";
 import SingleProduct from "./components/SingleProduct";
 import { CiSearch } from "react-icons/ci";
 import { CiShoppingCart } from "react-icons/ci";
+import { Toaster } from "react-hot-toast";
 
 const App = () => {
   const [cart, setCart] = useState([]);
@@ -64,6 +65,7 @@ const App = () => {
       </header>
       <div className="content">
         <div className="max-w-[1350px] mx-auto px-[5px]">
+          <Toaster position="bottom-right" />
           <Routes>
             <Route path="/" element={<Home />} />
             <Route

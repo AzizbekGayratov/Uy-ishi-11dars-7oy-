@@ -1,6 +1,8 @@
 import React from "react";
 import { Link } from "react-router-dom";
 import { FaCartShopping } from "react-icons/fa6";
+import Swal from "sweetalert2";
+import toast from "react-hot-toast";
 
 const Card = ({ product, cart, setCart }) => {
   return (
@@ -33,8 +35,23 @@ const Card = ({ product, cart, setCart }) => {
         <button
           className="flex items-center gap-[4px] mt-[8px] px-[15px] py-[6px] bg-black text-white rounded    "
           onClick={() => {
-            setCart([...cart, product]);
-            localStorage.setItem("cart", JSON.stringify([...cart, product]));
+            Swal.fire({
+              text: "Do you want to add this product to your cart?",
+              icon: "question",
+              showCancelButton: true,
+              confirmButtonColor: "#3085d6",
+              cancelButtonColor: "#d33",
+              confirmButtonText: "Yes",
+            }).then((result) => {
+              if (result.isConfirmed) {
+                setCart([...cart, product]);
+                localStorage.setItem(
+                  "cart",
+                  JSON.stringify([...cart, product])
+                );
+                toast.success("Product added to cart");
+              }
+            });
           }}
         >
           <FaCartShopping /> Add to cart
