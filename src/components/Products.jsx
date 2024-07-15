@@ -10,6 +10,9 @@ const Products = ({ cart, setCart }) => {
   const dispatch = useDispatch();
 
   const [loading, setLoading] = useState(false);
+  const [totalPages, setTotalPages] = useState([]);
+  const [currentPage, setCurrentPage] = useState(1);
+  const [showPages, setShowPages] = useState(true);
 
   const [brands, setBrands] = useState([]);
   const [selectedBrand, setSelectedBrand] = useState("");
@@ -31,16 +34,24 @@ const Products = ({ cart, setCart }) => {
       const data = await response.json();
       setColors(data);
     };
+    const getProductsCount = async () => {
+      const response = await fetch(`${baseUrl}/products`);
+      const data = await response.json();
+      const count = Math.ceil(data.length / 8);
+      const pages = new Array(count).fill().map((_, i) => i + 1);
+      setTotalPages(pages);
+    };
     fetchBrands();
     fetchColors();
+    getProductsCount();
   }, []);
 
+  const params = [];
   useEffect(() => {
     const fetchProducts = async () => {
       setLoading(true);
 
       let Query = `${baseUrl}/products`;
-      const params = [];
       if (selectedBrand) {
         params.push(`brand_name=${encodeURIComponent(selectedBrand)}`);
       }
@@ -57,6 +68,9 @@ const Products = ({ cart, setCart }) => {
       }
       if (params.length > 0) {
         Query += `?${params.join("&")}`;
+        setShowPages(false);
+      } else {
+        Query += `?_limit=8&_page=${currentPage}`;
       }
 
       try {
@@ -71,7 +85,7 @@ const Products = ({ cart, setCart }) => {
     };
 
     fetchProducts();
-  }, [selectedBrand, selectedColor, sortedPrice, sortedRating]);
+  }, [selectedBrand, selectedColor, sortedPrice, sortedRating, currentPage]);
 
   return (
     <div className="grid grid-cols-[240px_1fr] gap-[24px]">
@@ -192,7 +206,7 @@ const Products = ({ cart, setCart }) => {
       </aside>
       <main className="grid grid-cols-[repeat(auto-fill,minmax(200px,1fr))] gap-[1rem] pb-[40px]">
         {loading ? (
-          <div>Loading...</div>
+          <span className="loading loading-spinner loading-lg"></span>
         ) : (
           <>
             {products.map((product) => (
@@ -203,6 +217,29 @@ const Products = ({ cart, setCart }) => {
                 setCart={setCart}
               />
             ))}
+            {showPages && (
+              <div className="join">
+                {totalPages && (
+                  <>
+                    {totalPages.map((page) => (
+                      <button
+                        key={page}
+                        onClick={() => {
+                          setCurrentPage(page);
+                        }}
+                        className={
+                          page === currentPage
+                            ? "join-item btn btn-active"
+                            : "join-item btn"
+                        }
+                      >
+                        {page}
+                      </button>
+                    ))}
+                  </>
+                )}
+              </div>
+            )}
           </>
         )}
         {products.length === 0 && <div>No products found</div>}

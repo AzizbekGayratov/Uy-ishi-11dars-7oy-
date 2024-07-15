@@ -32,7 +32,7 @@ const SingleProduct = ({ cart, setCart }) => {
 
   return (
     <div className="flex gap-[20px] items-center justify-center">
-      {loading && <p>Loading...</p>}
+      {loading && <span className="loading loading-spinner loading-lg"></span>}
       {!loading && (
         <>
           <img src={product.image_url} alt="img" />
