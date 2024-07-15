@@ -53,7 +53,7 @@ const App = () => {
               <CiSearch className="w-[21.5px] h-[21.5px]"></CiSearch>
               <Link to="/cart" className="relative">
                 <span className="absolute -top-[0.1rem] -right-[0.1rem] bg-red-500 text-white rounded-full px-1 text-[10px]">
-                  {JSON.parse(localStorage.getItem("cart")).length}
+                  {JSON.parse(localStorage.getItem("cart"))?.length || []}
                 </span>
                 <CiShoppingCart className="w-[31.5px] h-[31.5px]"></CiShoppingCart>
               </Link>
