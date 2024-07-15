@@ -70,7 +70,7 @@ const Products = ({ cart, setCart }) => {
         Query += `?${params.join("&")}`;
         setShowPages(false);
       } else {
-        Query += `?_limit=8&_page=${currentPage}`;
+        Query += `?_limit=10&_page=${currentPage}`;
       }
 
       try {
@@ -218,7 +218,7 @@ const Products = ({ cart, setCart }) => {
               />
             ))}
             {showPages && (
-              <div className="join">
+              <div className="join mt-[36px]">
                 {totalPages && (
                   <>
                     {totalPages.map((page) => (

@@ -24,11 +24,7 @@ const App = () => {
         <div className="max-w-[1350px] mx-auto px-[5px]">
           <div className="flex justify-between items-center">
             <Link to="/">
-              <img
-                src="/public/header-logo.png"
-                className="w-[143px]"
-                alt="logo"
-              />
+              <h1 className="text-5xl font-bold">LOGO</h1>
             </Link>
             <nav>
               <ul className="flex gap-[30px]">
