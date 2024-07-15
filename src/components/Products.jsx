@@ -158,7 +158,7 @@ const Products = ({ cart, setCart }) => {
         <div className="collapse collapse-arrow">
           <input type="checkbox" />
           <div className="collapse-title text-xl font-medium">
-            Sort by price
+            Sort by Rating
           </div>
           <div className="collapse-content">
             <ul className="">
