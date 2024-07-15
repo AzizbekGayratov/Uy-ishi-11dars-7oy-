@@ -1,7 +1,7 @@
 import React, { useEffect } from "react";
 import Card from "./Card";
 
-const Cart = () => {
+const Cart = ({ setCart }) => {
   const [data, setData] = React.useState([]);
 
   useEffect(() => {
@@ -25,6 +25,7 @@ const Cart = () => {
           className="bg-red-500 text-white px-[15px] py-[6px] rounded mb-[36px] block ml-auto"
           onClick={() => {
             setData([]);
+            setCart([]);
             localStorage.removeItem("cart");
           }}
         >
