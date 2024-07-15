@@ -45,10 +45,9 @@ const Card = ({ product, cart, setCart }) => {
             }).then((result) => {
               if (result.isConfirmed) {
                 setCart([...cart, product]);
-                localStorage.setItem(
-                  "cart",
-                  JSON.stringify([...cart, product])
-                );
+                const data = JSON.parse(localStorage.getItem("cart")) || [];
+                data.push(product);
+                localStorage.setItem("cart", JSON.stringify(data));
                 toast.success("Product added to cart");
               }
             });

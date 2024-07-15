@@ -9,7 +9,7 @@ const SingleProduct = ({ cart, setCart }) => {
   const { id } = useParams();
   const navigate = useNavigate();
 
-  const [product, setProduct] = React.useState([]);
+  const [product, setProduct] = React.useState({});
   const [loading, setLoading] = React.useState(true);
 
   console.log(product);
@@ -54,10 +54,13 @@ const SingleProduct = ({ cart, setCart }) => {
                 }).then((result) => {
                   if (result.isConfirmed) {
                     setCart([...cart, product]);
-                    localStorage.setItem(
-                      "cart",
-                      JSON.stringify([...cart, product])
-                    );
+                    const data = localStorage.getItem("cart");
+                    if (data) {
+                      const cart = JSON.parse(data);
+                      cart.push(product);
+                      localStorage.setItem("cart", JSON.stringify(cart));
+                    }
+                    navigate("/cart");
                     toast.success("Product added to cart");
                   }
                 });
